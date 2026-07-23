@@ -2,6 +2,7 @@ var i18nData = {
     en: {
         // Sidebar
         common_tools: "Common Tools",
+        ai_tools: "AI Tools",
         research_office: "Research & Office",
         bio_info: "Bioinformatics",
         cloud_server: "Cloud Servers",
@@ -27,19 +28,6 @@ var i18nData = {
         blog_forum: "Blog & Forum",
         design_spec: "Design Spec",
         video_tutorial: "Video Tutorials",
-        // Top Websites (new sections)
-        search_portals: "Search & Portals",
-        social_community: "Social & Community",
-        news_media: "News & Media",
-        productivity: "Productivity & Collaboration",
-        developer_tools: "Developer Tools",
-        cloud_hosting: "Cloud & Hosting",
-        ai_ml: "AI & Machine Learning",
-        education: "Education & Learning",
-        video_streaming: "Video & Streaming",
-        ecommerce: "E-Commerce & Shopping",
-        communication: "Communication & Email",
-        reference: "Reference & Knowledge",
         // Nav
         home: "Home",
         about: "About",
@@ -65,8 +53,6 @@ var i18nData = {
         // Language
         lang_en: "EN",
         lang_zh: "中文",
-        // Top Websites sidebar parent
-        top_websites: "Top Websites",
         // Site names (Chinese → English)
         site_yuque: "Yuque",
         site_qq_mail: "QQ Mail",
@@ -123,10 +109,20 @@ var i18nData = {
         site_coolshell: "CoolShell",
         site_awd: "AWD",
         site_mooc: "MOOC",
-        site_remote_jobs: "Remote Jobs"
+        site_remote_jobs: "Remote Jobs",
+        // AI sites (domestic names → EN)
+        site_ernie: "ERNIE Bot",
+        site_qianwen: "Tongyi Qianwen",
+        site_zhipu: "Zhipu Qingyan",
+        site_kimi: "Kimi",
+        site_doubao: "Doubao",
+        site_iflytek: "iFlytek Spark",
+        site_deepseek: "DeepSeek",
+        site_tiangong: "Tiangong"
     },
     zh: {
         common_tools: "常用工具",
+        ai_tools: "AI工具",
         research_office: "科研办公",
         bio_info: "生物信息",
         cloud_server: "云服务器",
@@ -152,18 +148,6 @@ var i18nData = {
         blog_forum: "博客论坛",
         design_spec: "设计规范",
         video_tutorial: "视频教程",
-        search_portals: "搜索门户",
-        social_community: "社交社区",
-        news_media: "新闻媒体",
-        productivity: "生产力协作",
-        developer_tools: "开发工具",
-        cloud_hosting: "云计算托管",
-        ai_ml: "AI与机器学习",
-        education: "教育学习",
-        video_streaming: "视频流媒体",
-        ecommerce: "电子商务",
-        communication: "通讯邮件",
-        reference: "参考知识库",
         home: "首页",
         about: "关于",
         submit_site: "网站提交",
@@ -183,7 +167,6 @@ var i18nData = {
         hitokoto_text: "每日一言，点击查看详情。",
         lang_en: "EN",
         lang_zh: "中文",
-        top_websites: "热门网站",
         // Site names (Chinese originals)
         site_yuque: "语雀",
         site_qq_mail: "QQ 邮箱",
@@ -240,7 +223,16 @@ var i18nData = {
         site_coolshell: "酷壳",
         site_awd: "没位道",
         site_mooc: "慕课网",
-        site_remote_jobs: "远程职位"
+        site_remote_jobs: "远程职位",
+        // AI 站点（国内原名）
+        site_ernie: "文心一言",
+        site_qianwen: "通义千问",
+        site_zhipu: "智谱清言",
+        site_kimi: "Kimi",
+        site_doubao: "豆包",
+        site_iflytek: "讯飞星火",
+        site_deepseek: "DeepSeek",
+        site_tiangong: "天工AI"
     }
 };
 
