@@ -30,6 +30,7 @@ var i18nData = {
         video_tutorial: "Video Tutorials",
         // Nav
         home: "Home",
+        html_tools: "Online Tools",
         about: "About",
         submit_site: "Submit Site",
         friend_links: "Friend Links",
@@ -149,6 +150,7 @@ var i18nData = {
         design_spec: "设计规范",
         video_tutorial: "视频教程",
         home: "首页",
+        html_tools: "在线工具集",
         about: "关于",
         submit_site: "网站提交",
         friend_links: "友情链接",
