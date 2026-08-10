@@ -1,0 +1,11 @@
+# Cloudflare Workers 静态资源忽略清单（语法同 .gitignore）
+# wrangler deploy 会跳过下列文件，避免上传到 Workers assets
+.git
+.git/**
+node_modules
+node_modules/**
+.wrangler
+.wrangler/**
+.DS_Store
+Thumbs.db
+*.log
