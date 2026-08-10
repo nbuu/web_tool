@@ -6,7 +6,14 @@
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "exclude": [
+      ".git/**",
+      "node_modules/**",
+      ".wrangler/**",
+      ".DS_Store",
+      "Thumbs.db"
+    ]
   },
   "compatibility_flags": [
     "nodejs_compat"
