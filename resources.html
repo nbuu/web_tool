@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#f9f9f9" />
+    <title>网盘资源分享 - 在线工具网</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.png" />
+    <meta name="keywords" content="网盘资源,资源分享,百度网盘,阿里云盘,夸克网盘,在线工具网" />
+    <meta name="description" content="精选网盘资源分享：软件、影视、学习资料、电子书等，提取码一键复制。" />
+
+    <link rel="stylesheet" id="block-library-css"
+        href="./assets/css/block-library.min-5.6.2.css" type="text/css" media="all" />
+    <link rel="stylesheet" id="iconfont-css" href="./assets/css/iconfont-3.03029.1.css"
+        type="text/css" media="all" />
+    <link rel="stylesheet" id="bootstrap-css" href="./assets/css/bootstrap.min-4.3.1.css"
+        type="text/css" media="all" />
+    <link rel="stylesheet" id="iowen-css" href="./assets/css/style-3.03029.1.css"
+        type="text/css" media="all" />
+    <link rel="stylesheet" id="custom-css" href="./assets/css/custom-style.css"
+        type="text/css" media="all" />
+    <link rel="stylesheet" id="fortawesome-css" href="./assets/fontawesome-5.15.4/css/all.min.css" type="text/css" />
+
+    <style>
+        .res-container {
+            max-width: 1200px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* 顶部标题区 */
+        .res-hero {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 40px 24px 32px;
+            background: linear-gradient(135deg, #6a8dff 0%, #8a6aff 50%, #b06aff 100%);
+            border-radius: 16px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(106, 141, 255, 0.25);
+        }
+
+        .res-hero h1 {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0 0 10px;
+            letter-spacing: 1px;
+        }
+
+        .res-hero p {
+            font-size: 15px;
+            margin: 0;
+            opacity: 0.92;
+        }
+
+        .res-hero .res-count {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 5px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 工具栏：搜索 + 分类 */
+        .res-toolbar {
+            position: sticky;
+            top: 16px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            border: 1px solid #eef0f5;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .res-search {
+            position: relative;
+            flex: 1 1 280px;
+            min-width: 220px;
+        }
+
+        .res-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .res-search input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border: 1px solid #e3e6ee;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f7f8fb;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .res-search input:focus {
+            outline: none;
+            border-color: #6a8dff;
+            background: #fff;
+        }
+
+        .res-cats {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .res-cat {
+            padding: 7px 14px;
+            border: 1px solid #e3e6ee;
+            border-radius: 999px;
+            background: #fff;
+            color: #555;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .res-cat:hover {
+            border-color: #6a8dff;
+            color: #6a8dff;
+        }
+
+        .res-cat.active {
+            background: #6a8dff;
+            border-color: #6a8dff;
+            color: #fff;
+        }
+
+        /* 资源卡片网格 */
+        .res-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .res-card {
+            background: #fff;
+            border: 1px solid #eef0f5;
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .res-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+            border-color: #d8def0;
+        }
+
+        .res-card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .res-card-icon {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .res-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c2e3a;
+            margin: 0;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .res-card-desc {
+            color: #7a7e8c;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+            word-break: break-word;
+        }
+
+        .res-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .res-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .res-tag.disk {
+            color: #fff;
+        }
+
+        .res-tag.cat {
+            background: #eef1fb;
+            color: #5468d8;
+        }
+
+        .res-tag.size {
+            background: #f0f2f5;
+            color: #6b7280;
+        }
+
+        .res-tag.date {
+            background: #f0f2f5;
+            color: #6b7280;
+        }
+
+        .res-card-foot {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px dashed #eef0f5;
+        }
+
+        .res-pwd {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .res-pwd code {
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            background: #f4f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #e8590c;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .res-copy-btn {
+            border: none;
+            background: #f4f5f9;
+            color: #5468d8;
+            padding: 3px 9px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .res-copy-btn:hover {
+            background: #e8ebf7;
+        }
+
+        .res-copy-btn.copied {
+            background: #d4edda;
+            color: #1e7e34;
+        }
+
+        .res-go {
+            margin-left: auto;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            background: #6a8dff;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .res-go:hover {
+            background: #5577ee;
+            transform: translateX(2px);
+        }
+
+        .res-go i {
+            font-size: 11px;
+        }
+
+        /* 空状态 */
+        .res-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+        }
+
+        .res-empty i {
+            font-size: 48px;
+            margin-bottom: 14px;
+            color: #d8dce8;
+        }
+
+        .res-empty p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* 返回首页 */
+        .back-home {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-home a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #6a8dff;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 18px;
+            border: 1px solid #d8def0;
+            border-radius: 999px;
+            transition: all 0.2s;
+        }
+
+        .back-home a:hover {
+            background: #6a8dff;
+            color: #fff;
+            border-color: #6a8dff;
+        }
+
+        /* Toast 提示 */
+        .res-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #2c2e3a;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            z-index: 9999;
+        }
+
+        .res-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .res-hero h1 { font-size: 24px; }
+            .res-toolbar { position: static; }
+            .res-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body class="io-grey-mode">
+    <div class="res-container">
+        <div class="res-hero">
+            <h1><i class="fas fa-cloud-download-alt"></i> 网盘资源分享</h1>
+            <p>精选软件、影视、学习资料等优质资源，提取码一键复制</p>
+            <span class="res-count" id="resCount">共 0 个资源</span>
+        </div>
+
+        <div class="res-toolbar">
+            <div class="res-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="resSearch" placeholder="搜索资源名称、关键词…" autocomplete="off" />
+            </div>
+            <div class="res-cats" id="resCats"><!-- 分类按钮由 JS 生成 --></div>
+        </div>
+
+        <div class="res-grid" id="resGrid"><!-- 资源卡片由 JS 生成 --></div>
+
+        <div class="back-home">
+            <a href="/"><i class="fas fa-home"></i> 返回首页</a>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="res-toast" id="resToast">已复制提取码</div>
+
+    <script>
+        /* ============================================================
+         *  网盘资源数据 —— 在这里增加你的资源即可
+         *  复制下方任意一个对象，修改字段内容，页面会自动渲染。
+         *
+         *  字段说明：
+         *    title:       资源名称（必填）
+         *    desc:        简要描述（选填）
+         *    category:    分类，必须填在下面 CATEGORIES 里已定义的 key
+         *    disk:        网盘类型，必须填在下面 DISKS 里已定义的 key
+         *    url:         分享链接（必填）
+         *    pwd:         提取码（没有可留空 ""）
+         *    size:        文件大小（选填，如 "2.3 GB"）
+         *    date:        更新日期（选填，如 "2026-08-20"）
+         * ============================================================ */
+
+        /* 分类定义：key -> [名称, 图标, 颜色] */
+        var CATEGORIES = {
+            software: { name: '软件', icon: 'fa-cube', color: '#6a8dff' },
+            movie:    { name: '影视', icon: 'fa-film', color: '#e8590c' },
+            study:    { name: '学习资料', icon: 'fa-graduation-cap', color: '#13b86b' },
+            book:     { name: '电子书', icon: 'fa-book', color: '#b06aff' },
+            game:     { name: '游戏', icon: 'fa-gamepad', color: '#e0457b' },
+            other:    { name: '其他', icon: 'fa-box-open', color: '#6b7280' }
+        };
+
+        /* 网盘类型定义：key -> [名称, 图标, 颜色] */
+        var DISKS = {
+            baidu:  { name: '百度网盘', icon: 'fa-cloud', color: '#06a7ff' },
+            aliyun: { name: '阿里云盘', icon: 'fa-cloud', color: '#ff6a00' },
+            quark:  { name: '夸克网盘', icon: 'fa-cloud', color: '#5b8def' },
+            pan123: { name: '123网盘',  icon: 'fa-cloud', color: '#2c2e3a' },
+            xunlei: { name: '迅雷云盘', icon: 'fa-cloud', color: '#1e9fff' },
+            other:  { name: '其他网盘', icon: 'fa-cloud', color: '#6b7280' }
+        };
+
+        /* ====== 资源列表（在这里添加你的资源） ====== */
+        var RESOURCES = [
+            {
+                title: '200本经典计算机电子书',
+                desc: '电子书',
+                category: 'book',
+                disk: 'xunlei',
+                url: 'https://pan.xunlei.com/s/VP-X-RqyWxAhrfVEdHfseEdcA1?pwd=3zcd#',
+                date: '2026-08-21'
+            },
+            {
+                title: '【英语语法全程课】零基础适用',
+                desc: '零基础适用（全集50讲）',
+                category: 'study',
+                disk: 'baidu',
+                url: 'https://pan.baidu.com/s/1mGMT2vlb4mFnxVcPxfA9ZQ?pwd=66uh',
+                date: '2026-08-21'
+            },
+            {
+                title: '《刘慈欣经典书藉全集》+《刘慈欣作品集有声剧》 ​​​）',
+                desc: '刘慈欣',
+                category: 'book',
+                disk: 'baidu',
+                url: 'https://pan.baidu.com/s/1RmKIV1YufLhvgeIWY0j7Ag?pwd=5n1d',
+                date: '2026-08-21'
+            },
+            {
+                title: 'Elmo的笛屋VIP资源-爱尔兰哨笛学习资源',
+                desc: '爱尔兰哨笛',
+                category: 'study',
+                disk: 'baidu',
+                url: 'https://pan.baidu.com/s/1VV2hz8J4fEap0sT-CGo8cw?pwd=91vg',
+                date: '2026-08-21'
+            },
+            {
+                title: '钓鱼技巧之路亚学习资源',
+                desc: '路亚钓鱼',
+                category: 'study',
+                disk: 'quark',
+                url: 'https://pan.quark.cn/s/f0fad8865ec5?pwd=AhNb',
+                date: '2026-08-21'
+            }
+        ];
+        /* ====== 资源列表结束 ====== */
+
+        /* ====== 以下为渲染逻辑，一般无需修改 ====== */
+        (function () {
+            var grid = document.getElementById('resGrid');
+            var catsBox = document.getElementById('resCats');
+            var searchInput = document.getElementById('resSearch');
+            var countEl = document.getElementById('resCount');
+            var toast = document.getElementById('resToast');
+
+            var activeCat = 'all';
+            var keyword = '';
+
+            function escapeHtml(str) {
+                if (str == null) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function renderCats() {
+                var html = '<span class="res-cat active" data-cat="all">全部</span>';
+                Object.keys(CATEGORIES).forEach(function (key) {
+                    var c = CATEGORIES[key];
+                    html += '<span class="res-cat" data-cat="' + key + '">' +
+                        '<i class="fas ' + c.icon + '"></i> ' + escapeHtml(c.name) + '</span>';
+                });
+                catsBox.innerHTML = html;
+            }
+
+            function render() {
+                var list = RESOURCES.filter(function (r) {
+                    var catOk = activeCat === 'all' || r.category === activeCat;
+                    var kw = keyword.trim().toLowerCase();
+                    var kwOk = !kw ||
+                        (r.title && r.title.toLowerCase().indexOf(kw) > -1) ||
+                        (r.desc && r.desc.toLowerCase().indexOf(kw) > -1);
+                    return catOk && kwOk;
+                });
+
+                countEl.textContent = '共 ' + list.length + ' 个资源';
+
+                if (list.length === 0) {
+                    grid.innerHTML =
+                        '<div class="res-empty"><i class="far fa-folder-open"></i>' +
+                        '<p>没有找到匹配的资源</p></div>';
+                    return;
+                }
+
+                var html = '';
+                list.forEach(function (r) {
+                    var cat = CATEGORIES[r.category] || CATEGORIES.other;
+                    var disk = DISKS[r.disk] || DISKS.other;
+
+                    var pwdHtml = r.pwd
+                        ? '<span class="res-pwd"><i class="fas fa-key"></i> 提取码：<code>' +
+                          escapeHtml(r.pwd) + '</code></span>' +
+                          '<button class="res-copy-btn" data-pwd="' + escapeHtml(r.pwd) + '">' +
+                          '<i class="far fa-copy"></i> 复制</button>'
+                        : '<span class="res-pwd" style="color:#bbb"><i class="fas fa-unlock"></i> 无需提取码</span>';
+
+                    html +=
+                        '<div class="res-card">' +
+                            '<div class="res-card-head">' +
+                                '<div class="res-card-icon" style="background:' + cat.color + '">' +
+                                    '<i class="fas ' + cat.icon + '"></i></div>' +
+                                '<h3 class="res-card-title">' + escapeHtml(r.title) + '</h3>' +
+                            '</div>' +
+                            (r.desc ? '<p class="res-card-desc">' + escapeHtml(r.desc) + '</p>' : '') +
+                            '<div class="res-card-meta">' +
+                                '<span class="res-tag disk" style="background:' + disk.color + '">' +
+                                    '<i class="fas ' + disk.icon + '"></i> ' + escapeHtml(disk.name) + '</span>' +
+                                '<span class="res-tag cat"><i class="fas ' + cat.icon + '"></i> ' +
+                                    escapeHtml(cat.name) + '</span>' +
+                                (r.size ? '<span class="res-tag size"><i class="fas fa-database"></i> ' +
+                                    escapeHtml(r.size) + '</span>' : '') +
+                                (r.date ? '<span class="res-tag date"><i class="far fa-calendar"></i> ' +
+                                    escapeHtml(r.date) + '</span>' : '') +
+                            '</div>' +
+                            '<div class="res-card-foot">' +
+                                pwdHtml +
+                                '<a class="res-go" href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener">' +
+                                    '前往网盘 <i class="fas fa-arrow-right"></i></a>' +
+                            '</div>' +
+                        '</div>';
+                });
+                grid.innerHTML = html;
+            }
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(function () { toast.classList.remove('show'); }, 1600);
+            }
+
+            /* 分类点击 */
+            catsBox.addEventListener('click', function (e) {
+                var target = e.target.closest('.res-cat');
+                if (!target) return;
+                var cats = catsBox.querySelectorAll('.res-cat');
+                cats.forEach(function (c) { c.classList.remove('active'); });
+                target.classList.add('active');
+                activeCat = target.getAttribute('data-cat');
+                render();
+            });
+
+            /* 搜索 */
+            searchInput.addEventListener('input', function () {
+                keyword = this.value;
+                render();
+            });
+
+            /* 复制提取码 */
+            grid.addEventListener('click', function (e) {
+                var btn = e.target.closest('.res-copy-btn');
+                if (!btn) return;
+                var pwd = btn.getAttribute('data-pwd');
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(pwd).then(function () {
+                        btn.classList.add('copied');
+                        btn.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                        showToast('提取码已复制：' + pwd);
+                        setTimeout(function () {
+                            btn.classList.remove('copied');
+                            btn.innerHTML = '<i class="far fa-copy"></i> 复制';
+                        }, 1500);
+                    });
+                } else {
+                    // 兜底方案
+                    var ta = document.createElement('textarea');
+                    ta.value = pwd;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (err) {}
+                    document.body.removeChild(ta);
+                    showToast('提取码已复制：' + pwd);
+                }
+            });
+
+            renderCats();
+            render();
+        })();
+    </script>
+</body>
+</html>
